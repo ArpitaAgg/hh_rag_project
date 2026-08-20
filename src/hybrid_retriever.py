@@ -52,6 +52,26 @@ def min_max_normalize(scores_dict: Dict[str, float]) -> Dict[str, float]:
     return {k: (v - min_val) / (max_val - min_val) for k, v in scores_dict.items()}
 
 
+# Typical raw BM25 score for a solid keyword match on short passages; used to
+# saturate raw scores into [0, 1) by their own absolute magnitude.
+BM25_SATURATION_K = 3.0
+
+
+def bm25_saturating_normalize(scores_dict: Dict[str, float], k: float = BM25_SATURATION_K) -> Dict[str, float]:
+    """
+    Normalizes raw BM25 scores via score / (score + k) instead of min-max.
+
+    Min-max normalization rescales scores *relative to the current candidate
+    pool*, so on a small corpus a single incidental token match can produce
+    the top raw BM25 score among this query's candidates and get rescaled to
+    1.0 -- even if that raw score is small in absolute terms -- letting it
+    dominate the weighted fusion over a genuinely relevant semantic match.
+    A saturating transform instead maps each score by its own magnitude,
+    independent of what else was retrieved for this query.
+    """
+    return {k_id: (v / (v + k)) if v > 0 else 0.0 for k_id, v in scores_dict.items()}
+
+
 class HybridRetriever:
     """
     Combines FAISS vector search and BM25 keyword search with normalized score fusion.
@@ -130,9 +150,13 @@ class HybridRetriever:
             if cid not in raw_bm25_scores:
                 raw_bm25_scores[cid] = 0.0
 
-        # Apply Min-Max Normalization
+        # Apply score normalization: FAISS cosine similarity is already
+        # naturally bounded and comparable across queries, so per-query
+        # min-max is fine there. BM25 is unbounded and unstable on small
+        # candidate pools, so it gets a magnitude-based saturating transform
+        # instead (see bm25_saturating_normalize docstring).
         norm_faiss_scores = min_max_normalize(raw_faiss_scores)
-        norm_bm25_scores = min_max_normalize(raw_bm25_scores)
+        norm_bm25_scores = bm25_saturating_normalize(raw_bm25_scores)
 
         # Compute Combined Weighted Score
         hybrid_candidates = []

@@ -146,6 +146,23 @@ class ContextValidator:
             # Combine text across top candidates
             combined_candidate_text = " ".join([c.get("text", "").lower() for c in retrieved_candidates])
 
+            # ASCII entity presence can only ever match when the retrieved
+            # passages are themselves in a Latin script. For a cross-lingual
+            # match (e.g. an English query answered from an Indic-script
+            # translated passage), no ASCII substring can appear in the
+            # passage text by definition, so this check would reject every
+            # correct cross-lingual answer. Skip it when the candidate text
+            # is predominantly non-Latin; the semantic + BM25 hybrid score
+            # already validated relevance above.
+            letters = [c for c in combined_candidate_text if c.isalpha()]
+            ascii_letter_ratio = (sum(1 for c in letters if ord(c) < 128) / len(letters)) if letters else 1.0
+            if ascii_letter_ratio < 0.3:
+                return {
+                    "sufficient": True,
+                    "reason": "Context passes relevance quality checks (entity check skipped: non-Latin script passage).",
+                    "status": "sufficient"
+                }
+
             # Extract distinct ASCII specific query entities (e.g. proper nouns, places, years, unique identifiers)
             specific_entities = {w for w in q_words if len(w) > 3 and all(ord(c) < 128 for c in w) and w not in {
                 "what", "where", "when", "which", "how", "does", "that", "this", "from", "with", "about",
