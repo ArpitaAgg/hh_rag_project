@@ -1,0 +1,50 @@
+==================================================
+      HUGGING FACE DATASET SCHEMA REPORT
+==================================================
+
+1. DATASET NAME
+   ai4bharat/MSMARCO-XI
+
+2. CONFIGURATION(S)
+   - Available Config Names: ['default']
+   - Note: "as" is NOT a Hugging Face dataset configuration name.
+     The dataset uses a single configuration named 'default'.
+
+3. SPLITS AVAILABLE
+   - train      : 10,080,140 examples (~129.89 GB total)
+   - validation : 1,371,174 examples (~16.75 GB total)
+
+4. COMPLETE FEATURE / SCHEMA STRUCTURE
+   - query_id     : int64
+   - query        : string (Translated query in target Indic language)
+   - Answer       : string (Translated answer in target Indic language)
+   - Eng_Query    : string (Original English query)
+   - Eng_Answer   : string (Original English answer)
+   - source_lang  : string (e.g., 'eng_Latn')
+   - target_lang  : string (e.g., 'asm_Beng', 'hin_Deva', 'ben_Beng')
+   - query_type   : string (e.g., 'DESCRIPTION', 'NUMERIC', 'ENTITY', 'LOCATION')
+   - meta         : dict (frequency_penalty, max_tokens, model_name, presence_penalty, temperature, top_p)
+   - passages     : dict containing:
+       - English_passages    : list of strings
+       - Translated_passages : list of strings
+       - is_selected         : list of int64 (1 if passage contains answer, 0 otherwise)
+
+5. LANGUAGE-RELATED FIELDS
+   - `source_lang`: Language of original query (e.g., 'eng_Latn')
+   - `target_lang`: Target Indic language code (e.g., 'asm_Beng' for Assamese, 'hin_Deva' for Hindi, 'ben_Beng' for Bengali, 'guj_Gujr' for Gujarati, 'kan_Knda' for Kannada, 'mal_Mlym' for Malayalam, 'mar_Deva' for Marathi, 'ori_Orya' for Odia, 'pan_Guru' for Punjabi, 'tam_Taml' for Tamil, 'tel_Telu' for Telugu).
+
+6. PASSAGE STRUCTURE
+   - `passages['English_passages']`    : Original English candidate passages.
+   - `passages['Translated_passages']` : Translated Indic candidate passages.
+   - `passages['is_selected']`         : List of binary flags (1/0) marking ground-truth answer passages.
+
+7. RECOMMENDED WAY TO FILTER ASSAMESE ("as") RECORDS
+   - Language configuration is represented via parquet filename in HF repository (`train/asmtrain.parquet`, `validation/asmval.parquet`) and via record field `target_lang == 'asm_Beng'`.
+   - Recommended approach for streaming:
+     1. Pass `data_files={split: f"{split}/{lang_code}{split_suffix}.parquet"}` to `datasets.load_dataset(..., streaming=True)`.
+     2. Additionally filter record `target_lang.startswith('asm')` during item iteration.
+
+8. LIMITATIONS / DISCOVERIES
+   - The dataset total size is ~137 GB across all 11 Indic languages.
+   - Using `streaming=True` with `data_files` targets ONLY the specific language file (e.g. `train/asmtrain.parquet` ~30 MB), avoiding full dataset downloads or scanning unneeded languages.
+   - Streaming must never load the entire dataset into RAM or convert to pandas DataFrame.

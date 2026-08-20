@@ -1,0 +1,33 @@
+==================================================
+     HYBRID RETRIEVAL (FAISS + BM25) RESULTS     
+==================================================
+Total Chunks Indexed : 3
+Semantic Weight (FAISS) : 0.7
+Keyword Weight (BM25)  : 0.3
+
+Query [Q1 - Indic (Assamese)]: "কৰ্পোৰেচন কি?"
+  Latency: FAISS=4371.249ms | BM25=0.159ms | Fusion=0.021ms | Total=4371.430ms
+  Rank #1 | Combined Score: 1.0000 | FAISS Score: 0.5194 | BM25 Score: -0.1101 | Chunk ID: chunk_1102431_p0_w0 | Selected: True
+    Text: "ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, গছনাশক আৰু সাৰৰ ক্ষত..."
+  Rank #2 | Combined Score: 0.2700 | FAISS Score: 0.3721 | BM25 Score: -0.1131 | Chunk ID: chunk_1102432_p0_w0 | Selected: True
+    Text: "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিতৰত, যেনে এখন ৰাজ্য ব..."
+  Rank #3 | Combined Score: 0.0934 | FAISS Score: 0.3918 | BM25 Score: -0.1401 | Chunk ID: chunk_1102431_p1_w0 | Selected: True
+    Text: "কাৰ্চনে বিশ্বাস কৰে যে মানুহে অবাঞ্চিত পৰিৱেশত পোক-পতংগ আৰু আগাছা নিৰ্মূল কৰিবলৈ চেষ্টা কৰাৰ সময়ত প্ৰকৃততে পৰিৱেশ প্ৰদূ..."
+
+Query [Q2 - Indic (Assamese)]: "ৰেচেল কাৰ্চনে কিয় এক বাধ্যবাধকতা সহ্য কৰিবলৈ লিখিছিল?"
+  Latency: FAISS=19.363ms | BM25=0.381ms | Fusion=0.019ms | Total=19.764ms
+  Rank #1 | Combined Score: 0.7686 | FAISS Score: 0.7342 | BM25 Score: 0.1010 | Chunk ID: chunk_1102431_p0_w0 | Selected: True
+    Text: "ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, গছনাশক আৰু সাৰৰ ক্ষত..."
+  Rank #2 | Combined Score: 0.7000 | FAISS Score: 0.8912 | BM25 Score: -0.2208 | Chunk ID: chunk_1102432_p0_w0 | Selected: True
+    Text: "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিতৰত, যেনে এখন ৰাজ্য ব..."
+  Rank #3 | Combined Score: 0.3000 | FAISS Score: 0.2038 | BM25 Score: 0.2017 | Chunk ID: chunk_1102431_p1_w0 | Selected: True
+    Text: "কাৰ্চনে বিশ্বাস কৰে যে মানুহে অবাঞ্চিত পৰিৱেশত পোক-পতংগ আৰু আগাছা নিৰ্মূল কৰিবলৈ চেষ্টা কৰাৰ সময়ত প্ৰকৃততে পৰিৱেশ প্ৰদূ..."
+
+Query [Q3 - English]: "what is a corporation?"
+  Latency: FAISS=23.233ms | BM25=0.148ms | Fusion=0.023ms | Total=23.406ms
+  Rank #1 | Combined Score: 0.7000 | FAISS Score: 0.1399 | BM25 Score: 0.0000 | Chunk ID: chunk_1102432_p0_w0 | Selected: True
+    Text: "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিতৰত, যেনে এখন ৰাজ্য ব..."
+  Rank #2 | Combined Score: 0.2182 | FAISS Score: 0.1224 | BM25 Score: 0.0000 | Chunk ID: chunk_1102431_p0_w0 | Selected: True
+    Text: "ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, গছনাশক আৰু সাৰৰ ক্ষত..."
+  Rank #3 | Combined Score: 0.0000 | FAISS Score: 0.1145 | BM25 Score: 0.0000 | Chunk ID: chunk_1102431_p1_w0 | Selected: True
+    Text: "কাৰ্চনে বিশ্বাস কৰে যে মানুহে অবাঞ্চিত পৰিৱেশত পোক-পতংগ আৰু আগাছা নিৰ্মূল কৰিবলৈ চেষ্টা কৰাৰ সময়ত প্ৰকৃততে পৰিৱেশ প্ৰদূ..."

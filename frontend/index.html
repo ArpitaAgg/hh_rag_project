@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker House Goa 2026 — Multilingual Voice RAG</title>
+    
+    <!-- Google Fonts: Outfit & Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
+
+    <div class="app-container">
+        <!-- Top Brand Header with Banner Logo -->
+        <header class="app-header glass-header">
+            <div class="logo-wrapper">
+                <img src="/static/logo.png" alt="Hacker House Goa 2026 — 2:47 PM Studio" class="header-logo-img">
+            </div>
+            
+            <div class="header-tagline">
+                <span class="badge-tag">GOA, INDIA · 28–31 OCT 2026</span>
+                <span class="badge-tag tag-pink">VOICE-ENABLED MULTILINGUAL RAG</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Voice & Text Input Panel -->
+            <section class="input-panel card glass-card">
+                <div class="panel-header">
+                    <h2>🎙️ Speak or Type Your Question</h2>
+                    <span class="multilingual-badge">14 Indic Languages Supported</span>
+                </div>
+                
+                <!-- Voice Controls -->
+                <div class="voice-controls">
+                    <button id="recordBtn" class="btn btn-gold btn-voice">
+                        <span class="mic-icon">🎙️</span>
+                        <span class="btn-text">Start Voice Recording</span>
+                    </button>
+                    <button id="stopBtn" class="btn btn-pink btn-voice" disabled>
+                        <span class="stop-icon">⏹️</span>
+                        <span class="btn-text">Stop & Submit Voice</span>
+                    </button>
+                </div>
+
+                <div id="recordingStatus" class="recording-status hidden">
+                    <span class="pulse-dot"></span> Recording Live Voice Audio... <span id="timer" class="timer-badge">00:00</span>
+                </div>
+
+                <div class="divider"><span>OR TYPE IN ANY SCRIPT / LANGUAGE</span></div>
+
+                <!-- Text Query Input -->
+                <form id="textForm" class="text-input-form">
+                    <div class="input-group">
+                        <input type="text" id="queryInput" placeholder="Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English..." autocomplete="off">
+                        <button type="submit" id="submitTextBtn" class="btn btn-submit">
+                            <span>Ask Query</span> ➔
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Quick Sample Query Pills -->
+                <div class="sample-queries">
+                    <span class="sample-title">Sample Queries:</span>
+                    <button type="button" class="sample-pill" data-query="निगम क्या है?">🇮🇳 निगम क्या है?</button>
+                    <button type="button" class="sample-pill" data-query="pani ka boiling point kitna hota h">🗣️ pani ka boiling point</button>
+                    <button type="button" class="sample-pill" data-query="কর্পোরেশন কি?">🇧🇩 কর্পোরেশন কি?</button>
+                    <button type="button" class="sample-pill" data-query="கார்பரேஷன் என்றால் என்ன?">🇮🇳 கார்பரேஷன் என்றால் என்ன?</button>
+                    <button type="button" class="sample-pill" data-query="What is climate change?">🌐 What is climate change?</button>
+                </div>
+            </section>
+
+            <!-- Loading Spinner & Overlay -->
+            <div id="loadingOverlay" class="loading-overlay glass-card hidden">
+                <div class="spinner-wrapper">
+                    <div class="neon-spinner"></div>
+                </div>
+                <p id="loadingMsg" class="loading-text">Processing query through Sarvam STT & Vector RAG Pipeline...</p>
+            </div>
+
+            <!-- Output Results Section -->
+            <section id="resultsSection" class="results-panel card glass-card hidden">
+                <!-- Status & Latency Bar -->
+                <div class="status-header">
+                    <div class="status-badges">
+                        <span id="statusBadge" class="badge badge-status">ANSWERED</span>
+                        <span id="groundedBadge" class="badge badge-grounded">GROUNDED</span>
+                        <span id="providerBadge" class="badge badge-info">Groq (groq/compound-mini)</span>
+                    </div>
+                    <div id="latencyBadge" class="latency-bar">
+                        <span class="latency-item">STT: <strong id="latStt">0ms</strong></span>
+                        <span class="latency-item">Retrieval: <strong id="latRet">0ms</strong></span>
+                        <span class="latency-item">Total: <strong id="latTotal">0ms</strong></span>
+                    </div>
+                </div>
+
+                <!-- Spoken Transcript Box -->
+                <div id="transcriptBox" class="result-box transcript-box hidden">
+                    <h3>🗣️ Spoken Transcript / Question</h3>
+                    <p id="transcriptText" class="transcript-content"></p>
+                </div>
+
+                <!-- Answer Output Box -->
+                <div class="result-box answer-box">
+                    <h3>💡 Grounded Answer</h3>
+                    <div id="answerText" class="answer-content"></div>
+                </div>
+
+                <!-- Retrieved Context Chunks Accordion -->
+                <div class="result-box sources-box">
+                    <h3>📚 Retrieved Knowledge Sources (<span id="sourceCount">0</span>)</h3>
+                    <div id="sourcesContainer" class="sources-list"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>HACKER HOUSE GOA 2026 · 2:47 PM STUDIO · Sarvam STT + FAISS & BM25 Hybrid + Groq LLM + 3-Layer Guardrails</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

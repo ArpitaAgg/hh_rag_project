@@ -1,0 +1,80 @@
+==================================================
+  REAL DATASET HYBRID RETRIEVAL EVALUATION REPORT 
+==================================================
+
+Embedding Model     : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+Embedding Dimension : 384
+Retrieval Fusion    : Hybrid (70% FAISS Semantic + 30% BM25 Keyword)
+
+LANGUAGE: Assamese (target_lang: asm_Beng)
+  Records Processed     : 2
+  Chunks Generated      : 3
+  Embedding Dimension   : 384
+  FAISS Index Size      : 3 vectors
+  BM25 Document Count   : 3 docs
+  Top-1 Accuracy        : 50.0%
+  Top-3 Accuracy        : 100.0%
+  Top-5 Accuracy        : 100.0%
+  Average Latency       : 48.18 ms
+  p50 Latency           : 48.18 ms
+  p95 Latency           : 51.06 ms
+  Errors                : 0
+
+LANGUAGE: Hindi (target_lang: hin_Deva)
+  Records Processed     : 2
+  Chunks Generated      : 3
+  Embedding Dimension   : 384
+  FAISS Index Size      : 3 vectors
+  BM25 Document Count   : 3 docs
+  Top-1 Accuracy        : 50.0%
+  Top-3 Accuracy        : 100.0%
+  Top-5 Accuracy        : 100.0%
+  Average Latency       : 42.71 ms
+  p50 Latency           : 42.71 ms
+  p95 Latency           : 48.0 ms
+  Errors                : 0
+
+LANGUAGE: Bengali (target_lang: ben_Deva)
+  Records Processed     : 2
+  Chunks Generated      : 3
+  Embedding Dimension   : 384
+  FAISS Index Size      : 3 vectors
+  BM25 Document Count   : 3 docs
+  Top-1 Accuracy        : 50.0%
+  Top-3 Accuracy        : 100.0%
+  Top-5 Accuracy        : 100.0%
+  Average Latency       : 39.84 ms
+  p50 Latency           : 39.84 ms
+  p95 Latency           : 43.74 ms
+  Errors                : 0
+
+==================================================
+        3 REPRESENTATIVE RETRIEVAL EXAMPLES       
+==================================================
+
+--- Example #1 (Assamese) ---
+QUERY       : কৰ্পোৰেচন কি?
+GROUND TRUTH: এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত...
+TOP RETRIEVED: ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, ...
+RELEVANT    : NO
+SCORE       : 1.0
+LANGUAGE    : Assamese
+
+--- Example #2 (Hindi) ---
+QUERY       : কৰ্পোৰেচন কি?
+GROUND TRUTH: এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত...
+TOP RETRIEVED: ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, ...
+RELEVANT    : NO
+SCORE       : 1.0
+LANGUAGE    : Hindi
+
+--- Example #3 (Bengali) ---
+QUERY       : কৰ্পোৰেচন কি?
+GROUND TRUTH: এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত...
+TOP RETRIEVED: ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, ...
+RELEVANT    : NO
+SCORE       : 1.0
+LANGUAGE    : Bengali
+
+TOTAL EXECUTION TIME : 14.63s
+PRODUCTION INDEXES   : UNTOUCHED (data/indexes/ remains original)

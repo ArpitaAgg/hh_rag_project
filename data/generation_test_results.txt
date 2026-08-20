@@ -1,0 +1,45 @@
+==================================================
+      RAG PIPELINE GENERATION TEST RESULTS        
+==================================================
+Active Generator Provider : local-extractive-dev
+Total Sample Chunks       : 3
+
+Query [Q1 - Answerable (Indic)]: "কৰ্পোৰেচন কি?"
+  - Grounded Status    : grounded
+  - Model Provider     : local-extractive-dev
+  - Retrieval Latency  : 5926.97 ms
+  - Generation Latency : 0.00 ms
+  - Total RAG Latency  : 5926.98 ms
+  - Generated Answer   : "ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, গছনাশক আৰু সাৰৰ ক্ষতিকাৰক ব্যৱহাৰৰ বিষয়ে এক অতি প্ৰভাৱশালী যুক্তি দাঙি ধৰিছে।"
+
+Query [Q2 - Answerable (Indic)]: "ৰেচেল কাৰ্চনে কিয় এক বাধ্যবাধকতা সহ্য কৰিবলৈ লিখিছিল?"
+  - Grounded Status    : grounded
+  - Model Provider     : local-extractive-dev
+  - Retrieval Latency  : 39.09 ms
+  - Generation Latency : 0.00 ms
+  - Total RAG Latency  : 39.09 ms
+  - Generated Answer   : "ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰেচেল কাৰ্চনে পৰিৱেশত ৰাসায়নিক, কীটনাশক, গছনাশক আৰু সাৰৰ ক্ষতিকাৰক ব্যৱহাৰৰ বিষয়ে এক অতি প্ৰভাৱশালী যুক্তি দাঙি ধৰিছে।"
+
+Query [Q3 - Answerable (English)]: "what is a corporation?"
+  - Grounded Status    : insufficient_context
+  - Model Provider     : local-extractive-dev
+  - Retrieval Latency  : 30.65 ms
+  - Generation Latency : 0.00 ms
+  - Total RAG Latency  : 30.66 ms
+  - Generated Answer   : "I do not have enough information from the retrieved context to answer this question."
+
+Query [Q4 - Insufficient Context]: "What is the speed of light in a vacuum?"
+  - Grounded Status    : insufficient_context
+  - Model Provider     : local-extractive-dev
+  - Retrieval Latency  : 27.22 ms
+  - Generation Latency : 0.00 ms
+  - Total RAG Latency  : 27.22 ms
+  - Generated Answer   : "I do not have enough information from the retrieved context to answer this question."
+
+Query [Q5 - Insufficient Context]: "Who won the FIFA World Cup in 2022?"
+  - Grounded Status    : insufficient_context
+  - Model Provider     : local-extractive-dev
+  - Retrieval Latency  : 32.41 ms
+  - Generation Latency : 0.00 ms
+  - Total RAG Latency  : 32.42 ms
+  - Generated Answer   : "I do not have enough information from the retrieved context to answer this question."

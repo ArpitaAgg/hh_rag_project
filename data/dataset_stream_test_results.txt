@@ -1,0 +1,26 @@
+==================================================
+     DATASET STREAM MULTI-LANGUAGE TEST REPORT    
+==================================================
+
+TOTAL TESTS EVALUATED : 5
+PASSED                : 5 / 5
+
+Case #1: Assamese Train (as)
+  Status : PASS
+  Details: Records: 2 | Elapsed: 0.00s | Target Parquet: train/asmtrain.parquet
+
+Case #2: Hindi Train (hi)
+  Status : PASS
+  Details: Records: 2 | Elapsed: 0.00s | Target Parquet: train/hintrain.parquet
+
+Case #3: Bengali Train (bn)
+  Status : PASS
+  Details: Records: 2 | Elapsed: 0.00s | Target Parquet: train/bentrain.parquet
+
+Case #4: Assamese Validation (as)
+  Status : PASS
+  Details: Records: 2 | Elapsed: 0.00s | Target Parquet: validation/asmval.parquet
+
+Case #5: Unsupported Language (xx)
+  Status : PASS
+  Details: Passed: Caught expected ValueError ('Unsupported language 'xx'. Supported languages: ['as', 'asm', 'ben', 'bn', 'gu', 'guj', 'hi', 'hin', 'kan', 'kn', 'mal', 'mar', 'ml', 'mr', 'ne', 'nep', 'or', 'ori', 'pa', 'pan', 'sa', 'san', 'ta', 'tam', 'te', 'tel', 'ur', 'urd']')

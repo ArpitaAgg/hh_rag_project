@@ -1,0 +1,30 @@
+==================================================
+      FASTAPI WEB BACKEND TEST RESULTS            
+==================================================
+
+TOTAL TESTS RUN : 6
+PASSED          : 6 / 6
+
+Case #1: GET /health
+  Status : PASS
+  Details: HTTP 200 | Body: {'status': 'ok', 'service': 'voice-rag'}
+
+Case #2: POST /api/text (Valid)
+  Status : PASS
+  Details: Status: answered | Answer: 'ৰেচেল কাৰ্চনৰ দ্য অ'ব্লিগেশ্যন টু এণ্ডিউৰ নামৰ প্ৰবন্ধটোত ৰে...'
+
+Case #3: POST /api/text (Empty)
+  Status : PASS
+  Details: Status: rejected
+
+Case #4: POST /api/voice (Invalid File)
+  Status : PASS
+  Details: Status: stt_failed | Error: Unsupported audio format '.txt'. Supported formats: ['.flac', '.m4a', '.mp3', '.ogg', '.wav', '.webm']
+
+Case #5: POST /api/voice (Mocked STT)
+  Status : PASS
+  Details: Status: answered | Transcript: 'কৰ্পোৰেচন কি?'
+
+Case #6: GET / (Frontend Page)
+  Status : PASS
+  Details: HTTP 200

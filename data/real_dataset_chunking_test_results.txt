@@ -1,0 +1,25 @@
+==================================================
+  REAL MSMARCO-XI DATASET CHUNKING TEST RESULTS   
+==================================================
+
+OVERALL STATUS          : PASS
+Languages Tested        : Assamese (as), Hindi (hi), Bengali (bn)
+Records Processed       : 6
+Total Chunks Generated  : 9
+Average Chunks / Record : 1.5
+Min Chunk Length        : 130 chars
+Max Chunk Length        : 178 chars
+Total Elapsed Time      : 0.02s
+
+SAMPLE GENERATED CHUNK STRUCT:
+  Chunk ID          : chunk_1102432_p0_w0
+  Query ID          : 1102432
+  Target Lang       : asm_Beng
+  Chunking Strategy : overlapping_window
+  Char Length       : 153
+  Word Length       : 24
+  Text              : "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিতৰত, যেনে এখন ৰাজ্য বা প্ৰদেশ। তাৰপিছত সেই কোম্পানী..."
+
+NO ERRORS FOUND:
+  - All real dataset records flowed through ChunkingPipeline seamlessly.
+  - Metadata query_id, target_lang, source_lang, and is_selected preserved cleanly.

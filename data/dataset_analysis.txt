@@ -1,0 +1,31 @@
+==================================================
+   MSMARCO-XI DATASET STRUCTURE ANALYSIS REPORT
+==================================================
+
+1. Dataset Metadata
+   - Name: ai4bharat/MSMARCO-XI
+   - Available Splits:
+     * train: 10,080,140 examples (~120.97 GB)
+     * validation: 1,371,174 examples (~15.60 GB)
+   - Total Records: ~11,451,314 examples (~136.57 GB total)
+
+2. Key Schema Fields
+   - source_lang: Language code of original text (e.g., 'eng_Latn' for English)
+   - target_lang: Language code of target translation (e.g., 'asm_Beng' for Assamese, 'hin_Deva' for Hindi, 'ben_Beng' for Bengali)
+   - query_id: Unique numerical identifier for the question/query
+   - query_type: Question category (e.g., 'DESCRIPTION', 'NUMERIC', 'ENTITY', 'LOCATION', 'PERSON')
+   - Eng_Query: Question text in English
+   - query: Question text translated into the target Indic language
+   - Eng_Answer: Ground-truth reference answer in English
+   - Answer: Reference answer translated into the target Indic language
+   - passages: Dictionary containing candidate passage lists:
+     * English_passages: Array of candidate passage text strings in English
+     * Translated_passages: Array of candidate passage text strings in target Indic language
+     * is_selected: Array of binary flags (1 = passage contains the answer, 0 = irrelevant passage)
+   - meta: Information about translation models and generation parameters
+
+3. Structure Analysis Insights
+   - Query Length: Typically short questions (avg ~6-10 words / 30-50 characters).
+   - Answer Length: Concise answer sentences (avg ~15-25 words / 80-150 characters).
+   - Passages per Record: Usually 8 to 10 candidate passage documents per query.
+   - Relevance (is_selected): At least one passage per query has `is_selected=1`, designating it as the relevant chunk that answers the query.

@@ -1,0 +1,33 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# Environment Variables & Secrets
+.env
+*.env
+
+# Python Cache & Compiled Files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE & OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Task & Log Files
+*.log
+
+# Temporary Uploads & Artifacts
+data/temp_uploads/
+data/*.json
+data/*.parquet
+data/indexes/
+*.parquet
+*.wav
+*.mp3
+*.webm
+*.ogg

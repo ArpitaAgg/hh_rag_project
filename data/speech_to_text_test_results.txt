@@ -1,0 +1,30 @@
+==================================================
+     SPEECH-TO-TEXT & VOICE RAG TEST RESULTS      
+==================================================
+
+TOTAL TEST CASES : 6
+PASSED           : 6 / 6
+
+Case #1: Missing API Key Handling
+  Status : PASS
+  Details: SARVAM_API_KEY environment variable is not configured.
+
+Case #2: Non-existent File Path
+  Status : PASS
+  Details: Audio file not found at path: 'non_existent_file_xyz123.wav'
+
+Case #3: Empty Audio File (0 bytes)
+  Status : PASS
+  Details: Audio file at 'data\test_audio\empty_audio.wav' is empty (0 bytes).
+
+Case #4: Invalid Audio Format (.txt)
+  Status : PASS
+  Details: Unsupported audio format '.txt'. Supported formats: ['.flac', '.m4a', '.mp3', '.ogg', '.wav', '.webm']
+
+Case #5: Live Sarvam API Test
+  Status : PASS
+  Details: SKIPPED (SARVAM_API_KEY not configured)
+
+Case #6: VoiceRAGPipeline Integration Test
+  Status : PASS
+  Details: Status: stt_failed

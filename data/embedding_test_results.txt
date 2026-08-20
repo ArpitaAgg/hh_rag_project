@@ -1,0 +1,16 @@
+==================================================
+    EMBEDDINGS MODULE TEST RESULTS
+==================================================
+Model Name           : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+Chunks Embedded      : 3
+Embedding Dimension  : 384
+Matrix Shape         : (3, 384)
+Inference Time       : 336.5779 seconds
+Avg Time per Chunk   : 112.1926 seconds
+Valid Numerical Values : PASS
+L2 Normalized Vector   : PASS
+
+Single Query Test    : "কৰ্পোৰেচন কি?"
+Query Vector Shape   : (384,)
+Query Vector Norm    : 1.000000
+Query Valid          : PASS

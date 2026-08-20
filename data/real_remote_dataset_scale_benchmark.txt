@@ -1,0 +1,31 @@
+==================================================
+ REAL REMOTE DATASET STREAMING SCALE BENCHMARK    
+==================================================
+
+Target Language     : Assamese ('as')
+Embedding Model     : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+Embedding Dimension : 384
+Retrieval Fusion    : Hybrid (70% FAISS + 30% BM25)
+
+==================================================
+        REMOTE SCALE COMPARISON TABLE             
+==================================================
+Metric                    | 100 Records  | 1,000 Records | 10,000 Records
+-------------------------------------------------------------------------
+Actual Streamed Recs      | N/A          | N/A           | N/A           
+Unique Query IDs          | N/A          | N/A           | N/A           
+Chunks Generated          | N/A          | N/A           | N/A           
+Total Indexing Time (s)   | N/A          | N/A           | N/A           
+Embedding Time (s)        | N/A          | N/A           | N/A           
+Peak RAM (MB)             | N/A          | N/A           | N/A           
+Top-1 Accuracy (%)        | N/A          | N/A           | N/A           
+Top-5 Accuracy (%)        | N/A          | N/A           | N/A           
+Retrieval p50 (ms)        | N/A          | N/A           | N/A           
+
+EXPLICIT AUDIT DECLARATIONS:
+  REMOTE DATASET VERIFIED : NO
+  LOCAL DATASET USED      : NO
+  PRODUCTION INDEX MODIFIED: NO
+  PRODUCTION CODE MODIFIED : NO
+
+TOTAL BENCHMARK RUNTIME : 180.88s

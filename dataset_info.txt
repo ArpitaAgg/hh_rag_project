@@ -1,0 +1,49 @@
+==========================================
+    DATASET INSPECTION REPORT             
+==========================================
+Dataset Name: ai4bharat/MSMARCO-XI
+
+--- Available Splits & Example Counts ---
+  - Split 'train': 10,080,140 examples (120.97 GB)
+  - Split 'validation': 1,371,174 examples (15.60 GB)
+
+--- Column Names & Features ---
+  - source_lang: Value('string')
+  - target_lang: Value('string')
+  - meta: {'frequency_penalty': Value('int64'), 'max_tokens': Value('int64'), 'model_name': Value('string'), 'presence_penalty': Value('int64'), 'temperature': Value('int64'), 'top_p': Value('int64')}
+  - Answer: Value('string')
+  - query_id: Value('int64')
+  - query_type: Value('string')
+  - passages: {'English_passages': List(Value('string')), 'Translated_passages': List(Value('string')), 'is_selected': List(Value('int64'))}
+  - Eng_Query: Value('string')
+  - Eng_Answer: Value('string')
+  - query: Value('string')
+
+--- Sample Records (Fetched via Streaming) ---
+--- Sample Record #1 ---
+Source Language  : eng_Latn
+Target Language  : asm_Beng
+Query ID         : 1102432
+Query Type       : DESCRIPTION
+Original Query (English)   : . what is a corporation?
+Translated Query (Indic)   : কৰ্পোৰেচন কি?
+Original Answer (English)  : A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.
+Translated Answer (Indic)  : নিগম হৈছে এটা কোম্পানী বা মানুহৰ এটা গোট যিটোক আইনত একক সত্তা হিচাপে কাম কৰিবলৈ আৰু স্বীকৃতি দিয়া হৈছে।
+Number of Candidate Passages: 10
+  Passage [0] (Selected: 0):
+    English: A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporati...
+    Indic  : এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিতৰত, যেনে এখন ৰাজ্য বা প্ৰদেশ। তাৰপিছত সেই কোম্পানী...
+
+--- Sample Record #2 ---
+Source Language  : eng_Latn
+Target Language  : asm_Beng
+Query ID         : 1102431
+Query Type       : DESCRIPTION
+Original Query (English)   : why did rachel carson write an obligation to endure
+Translated Query (Indic)   : ৰেচেল কাৰ্চনে কিয় এক বাধ্যবাধকতা সহ্য কৰিবলৈ লিখিছিল
+Original Answer (English)  : Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more problems by polluting the environment.
+Translated Answer (Indic)  : ৰেচেল কাৰ্চনে দ্য অব্লিগেশ্যন টু এণ্ডিউৰ লিখিছে কাৰণ তেওঁ বিশ্বাস কৰে যে মানুহে অবাঞ্চিত পোক-পতংগ আৰু আগাছ নিৰ্মূল কৰিবলৈ চেষ্টা কৰিলেও তেওঁ পৰিৱেশ প্ৰদূষিত কৰি প্ৰকৃততে অধিক সমস্যাৰ সৃষ্টি কৰিছে।
+Number of Candidate Passages: 10
+  Passage [0] (Selected: 0):
+    English: Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common pur...
+    Indic  : পঢ়িবলৈ লিখিবলৈ - কিতাপৰ প্ৰতি ভালপোৱা বৃদ্ধি কৰক (যদিও ই এখন কমিক কিতাপ) এটা যুক্তি অনুচ্ছেদত সংগঠিত কৰক, শব্দ [যি] এক সাধাৰণ উদ্দেশ্যৰ বাবে একেলগে ক...

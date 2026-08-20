@@ -1,0 +1,26 @@
+==================================================
+     CHUNKING STRATEGIES COMPARISON REPORT        
+==================================================
+Total Sample Records : 2
+Total Input Passages : 3
+
+--- Strategy: SENTENCE ---
+  - Total Chunks Produced : 4
+  - Average Chunk Length  : 115.0 chars (17.0 words)
+  - Min / Max Length      : 23 chars / 178 chars
+  - Metadata Completeness : PASS
+  - Sample Chunk Text     : "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত..."
+
+--- Strategy: OVERLAPPING_WINDOW ---
+  - Total Chunks Produced : 3
+  - Average Chunk Length  : 153.7 chars (22.7 words)
+  - Min / Max Length      : 130 chars / 178 chars
+  - Metadata Completeness : PASS
+  - Sample Chunk Text     : "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত..."
+
+--- Strategy: ADAPTIVE ---
+  - Total Chunks Produced : 3
+  - Average Chunk Length  : 153.7 chars (22.7 words)
+  - Min / Max Length      : 130 chars / 178 chars
+  - Metadata Completeness : PASS
+  - Sample Chunk Text     : "এটা কোম্পানী একটা নির্দিষ্ট দেশত অন্তৰ্ভুক্ত কৰা হয়, প্ৰায়েই সেই দেশৰ একটা সৰু উপসমষ্টিৰ সীমাৰ ভিত..."
