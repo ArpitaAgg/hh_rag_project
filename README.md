@@ -151,6 +151,29 @@ All test reports are automatically saved under `data/`.
 
 ---
 
+## ⏱️ End-to-End Latency Benchmark (P50 / P70 / P100)
+
+The full request path — Input Guardrail → Hybrid Retrieval (FAISS + BM25) →
+Context Validation → Answer Generation → Grounding Guardrail — is benchmarked
+against a **200ms full-pipeline budget** across a mixed set of answerable,
+multilingual, insufficient-context, and rejected test queries:
+
+```bash
+python src/benchmark_e2e_latency.py --repeats 2
+```
+
+This reports **P50, P70, and P100 (max)** latency for both the configured
+generator (`GENERATOR_PROVIDER` in `.env`) and the low-latency `fast_mode`
+local extractive generator, and writes the full report to
+`data/e2e_latency_benchmark.txt`.
+
+> Cloud-API generator backends (e.g. Groq) add network round-trip time and can
+> exceed the 200ms budget on individual queries; `fast_mode` and the in-memory
+> response cache exist precisely to keep the pipeline within budget on the
+> latency-critical path.
+
+---
+
 ## 📁 Complete Project Structure
 
 ```
