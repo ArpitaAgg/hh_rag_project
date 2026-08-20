@@ -104,7 +104,7 @@ class ContextValidator:
     """
     Evaluates retrieved passage quality and score thresholds before calling the answer generator.
     """
-    def __init__(self, min_combined_score: float = 0.25, min_semantic_score: float = 0.25):
+    def __init__(self, min_combined_score: float = 0.25, min_semantic_score: float = 0.20):
         self.min_combined_score = min_combined_score
         self.min_semantic_score = min_semantic_score
 
@@ -120,10 +120,16 @@ class ContextValidator:
         comb_score = top_candidate.get("combined_score", top_candidate.get("score", 0.0))
         sem_score = top_candidate.get("semantic_score_raw", top_candidate.get("score", 0.0))
 
-        if comb_score < self.min_combined_score or sem_score < self.min_semantic_score:
+        if comb_score < self.min_combined_score:
             return {
                 "sufficient": False,
-                "reason": f"Top candidate similarity score ({comb_score:.3f}) below relevance threshold ({self.min_combined_score}).",
+                "reason": f"Top candidate combined score ({comb_score:.3f}) below relevance threshold ({self.min_combined_score}).",
+                "status": "insufficient_context"
+            }
+        if sem_score < self.min_semantic_score:
+            return {
+                "sufficient": False,
+                "reason": f"Top candidate semantic score ({sem_score:.3f}) below relevance threshold ({self.min_semantic_score}).",
                 "status": "insufficient_context"
             }
 
