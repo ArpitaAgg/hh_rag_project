@@ -1,0 +1,15 @@
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.env
+*.env
+.DS_Store
+data/test_indexes/
+data/test_audio/
+data/temp_uploads/
+data/*.txt
+frontend/node_modules/
