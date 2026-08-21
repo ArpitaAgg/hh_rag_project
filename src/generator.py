@@ -177,7 +177,7 @@ class GroqAnswerGenerator(BaseAnswerGenerator):
     Production Groq LLM Generator using Groq's high-speed inference endpoints.
     Uses grounding system prompt template to ensure answers are strictly context-bound.
     """
-    def __init__(self, api_key: Optional[str] = None, model_name: str = "groq/compound-mini"):
+    def __init__(self, api_key: Optional[str] = None, model_name: str = "openai/gpt-oss-20b"):
         self.api_key = api_key or os.getenv("GROQ_API_KEY", "")
         if not self.api_key:
             try:
@@ -205,12 +205,12 @@ class GroqAnswerGenerator(BaseAnswerGenerator):
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are a strict zero-hallucination multilingual RAG assistant. MANDATE: You MUST answer the user question by extracting the exact factual answer directly from the provided context chunks. Do not prepend chunk numbers or prefixes like '1:' or 'Chunk 1:'. State the grounded fact clearly and concisely. YOU MUST TRANSLATE AND GENERATE YOUR RESPONSE IN THE EXACT SAME LANGUAGE AND SCRIPT AS THE USER'S QUESTION (e.g. Hindi Devanagari for Hindi queries, Hinglish for Hinglish queries, Bengali for Bengali queries, Tamil for Tamil queries, Marathi for Marathi queries). NEVER RESPOND IN ENGLISH WHEN THE USER QUESTION IS IN ANOTHER LANGUAGE OR SCRIPT."
+                    "content": "You are a strict zero-hallucination multilingual RAG assistant. MANDATE: Provide a SINGLE, SHORT, DIRECT 1-SENTENCE ANSWER to the user question using ONLY the provided context chunks. Cut out filler and background details. Answer the exact question directly. YOU MUST TRANSLATE AND GENERATE YOUR RESPONSE IN THE EXACT SAME LANGUAGE AND SCRIPT AS THE USER'S QUESTION (e.g. Hindi Devanagari for Hindi queries, Hinglish for Hinglish queries, Bengali for Bengali queries, Tamil for Tamil queries, Marathi for Marathi queries). NEVER RESPOND IN ENGLISH WHEN THE USER QUESTION IS IN ANOTHER LANGUAGE OR SCRIPT."
                 },
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.1,
-            "max_tokens": 200
+            "max_tokens": 150
         }
 
         try:
