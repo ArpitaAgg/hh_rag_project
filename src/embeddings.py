@@ -32,12 +32,19 @@ from sentence_transformers import SentenceTransformer
 
 # Central configuration: default open-source multilingual model
 # Model supports 50+ languages including major Indic scripts.
-# Uses the larger mpnet variant rather than MiniLM-L12: the smaller model was
-# measurably misranking cross-lingual (English query vs. Indic passage)
-# matches -- e.g. cosine(query, wrong passage) > cosine(query, correct
-# passage) on real MSMARCO-XI examples. mpnet-base gets the ranking right at
-# the cost of a larger download and slower inference.
-DEFAULT_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+#
+# NOTE: on a couple of specific short-passage MSMARCO-XI examples, this
+# model's cross-lingual cosine similarity ranked an unrelated passage above
+# the correct one. Larger (mpnet-base) and retrieval-tuned (multilingual-e5-
+# small) alternatives were tested and did not reliably fix it either -- the
+# margins were within noise on isolated short passages regardless of model,
+# and the larger model also exceeded free-tier deployment memory limits
+# (512MB). MiniLM-L12 is kept as the default since it's the only option that
+# is both stable to deploy and no worse in practice; this is a known
+# limitation on tiny/short-passage corpora that should be re-evaluated
+# against a realistically-sized production dataset, where per-example noise
+# like this washes out.
+DEFAULT_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 
 def normalize_embeddings(embeddings: np.ndarray) -> np.ndarray:
