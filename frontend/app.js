@@ -110,7 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData
             });
 
-            const data = await response.json();
+            let data = {};
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                hideLoading();
+                showError(`Server HTTP ${response.status}: Voice API unavailable or starting up.`);
+                return;
+            }
+
             hideLoading();
             renderVoiceResult(data);
 
@@ -136,7 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ query: query })
             });
 
-            const data = await response.json();
+            let data = {};
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                const textErr = await response.text();
+                hideLoading();
+                showError(`Server HTTP ${response.status}: Render backend is starting up or unavailable.`);
+                return;
+            }
+
             hideLoading();
             if (!response.ok) {
                 showError(data.detail || data.guardrail_reason || `Server returned status ${response.status}`);
@@ -146,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             hideLoading();
-            showError(`Network error: ${err.message || "Could not reach API server. Please check if Render server is still building or waking up."}`);
+            showError(`Request failed: ${err.message || "Could not reach API server."}`);
         }
     });
 
