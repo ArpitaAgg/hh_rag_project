@@ -226,40 +226,27 @@ except Exception as e:
 
 
 def render_retrieved_sources(result: dict):
-    """Renders Retrieved Knowledge Sources matching the user's exact attached screenshot."""
+    """Renders Retrieved Knowledge Sources using Streamlit native st.container cards."""
     context_chunks = result.get("retrieved_context", []) or result.get("rag_details", {}).get("retrieved_context", []) or result.get("context", [])
     
     if not context_chunks:
         return
 
-    chunk_cards_html = ""
+    st.markdown(f"### 📚 Retrieved Knowledge Sources ({len(context_chunks)})")
+
     for idx, c in enumerate(context_chunks, 1):
         chunk_id = c.get("chunk_id", c.get("id", f"chunk_{idx}"))
         score = c.get("similarity_score", c.get("score", 1.0 - (idx - 1) * 0.0587))
         text = c.get("text", c.get("content", ""))
-        
-        chunk_cards_html += f"""
-        <div class="source-card">
-            <div class="source-card-header">
-                <span>Rank #{idx} • Chunk ID: <code>{chunk_id}</code></span>
-                <span>Similarity Score: <strong>{score:.4f}</strong></span>
-            </div>
-            <div class="source-card-text">
-                {text}
-            </div>
-        </div>
-        """
 
-    st.markdown(f"""
-    <div style="margin-top: 24px; margin-bottom: 24px;">
-        <h3 style="color: #ffe500; font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
-            📚 Retrieved Knowledge Sources ({len(context_chunks)})
-        </h3>
-        <div class="sources-container">
-            {chunk_cards_html}
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        with st.container(border=True):
+            col_id, col_score = st.columns([3, 1])
+            with col_id:
+                st.caption(f"**Rank #{idx}** • Chunk ID: `{chunk_id}`")
+            with col_score:
+                st.caption(f"Similarity Score: **{score:.4f}**")
+            
+            st.write(text)
 
 
 def render_latency_analytics_dashboard(elapsed_ms: float):
