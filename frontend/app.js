@@ -138,11 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             hideLoading();
-            renderTextResult(data);
+            if (!response.ok) {
+                showError(data.detail || data.guardrail_reason || `Server returned status ${response.status}`);
+            } else {
+                renderTextResult(data);
+            }
 
         } catch (err) {
             hideLoading();
-            showError("Network error: Could not reach the API server.");
+            showError(`Network error: ${err.message || "Could not reach API server. Please check if Render server is still building or waking up."}`);
         }
     });
 
