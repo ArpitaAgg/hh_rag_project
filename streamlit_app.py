@@ -320,37 +320,43 @@ tab_voice, tab_text = st.tabs(["🎙️ Voice Input (Microphone)", "💬 Text In
 
 # --- TAB 1: VOICE INPUT ---
 with tab_voice:
-    st.caption("Record your query live using your microphone (Sarvam AI Speech-to-Text).")
-    
-    audio_bytes = None
-    file_ext = ".wav"
-    
-    if hasattr(st, "audio_input"):
-        rec_audio = st.audio_input("Click microphone button to record voice query:")
-        if rec_audio:
-            audio_bytes = rec_audio.read()
-            file_ext = ".wav"
-    else:
-        st.warning("Live microphone widget requires Streamlit 1.38+.")
+    with st.container(border=True):
+        st.markdown("<h3 style='color: #ffe500; font-family: \"Outfit\", sans-serif; font-size: 1.2rem; margin-bottom: 4px;'>🎙️ Voice Query Input</h3>", unsafe_allow_html=True)
+        st.caption("Record your query live using your microphone (Sarvam AI Speech-to-Text).")
+        
+        audio_bytes = None
+        file_ext = ".wav"
+        
+        if hasattr(st, "audio_input"):
+            rec_audio = st.audio_input("Click microphone button to record voice query:")
+            if rec_audio:
+                audio_bytes = rec_audio.read()
+                file_ext = ".wav"
+        else:
+            st.warning("Live microphone widget requires Streamlit 1.38+.")
 
-    if audio_bytes:
-        st.audio(audio_bytes, format=f"audio/{file_ext.replace('.', '')}")
-        if st.button("🚀 Process Voice Query", type="primary", key="btn_voice"):
-            t0 = time.time()
-            with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
-                with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
-                    tmp.write(audio_bytes)
-                    tmp_path = tmp.name
+        process_voice_clicked = False
+        if audio_bytes:
+            st.audio(audio_bytes, format=f"audio/{file_ext.replace('.', '')}")
+            st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
+            process_voice_clicked = st.button("🚀 Process Voice Query", type="primary", key="btn_voice")
 
-                try:
-                    result = voice_pipeline.answer_audio(tmp_path)
-                finally:
-                    if os.path.exists(tmp_path):
-                        os.remove(tmp_path)
+    if audio_bytes and process_voice_clicked:
+        t0 = time.time()
+        with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
+            with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
+                tmp.write(audio_bytes)
+                tmp_path = tmp.name
 
-            elapsed_ms = round((time.time() - t0) * 1000, 2)
-            
-            st.markdown("---")
+            try:
+                result = voice_pipeline.answer_audio(tmp_path)
+            finally:
+                if os.path.exists(tmp_path):
+                    os.remove(tmp_path)
+
+        elapsed_ms = round((time.time() - t0) * 1000, 2)
+        
+        st.markdown("---")
             st.markdown(f"""
             <div class="status-badges">
                 <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
