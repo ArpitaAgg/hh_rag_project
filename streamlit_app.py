@@ -388,6 +388,9 @@ with tab_text:
     if "user_query_input" not in st.session_state:
         st.session_state["user_query_input"] = ""
 
+    def set_sample_query(text: str):
+        st.session_state["user_query_input"] = text
+
     with st.container(border=True):
         st.markdown("<h3 style='color: #ffe500; font-family: \"Outfit\", sans-serif; font-size: 1.2rem; margin-bottom: 8px;'>💬 Text Query Input</h3>", unsafe_allow_html=True)
         
@@ -398,21 +401,11 @@ with tab_text:
 
         st.markdown("<p style='color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-top: 12px; margin-bottom: 6px;'>Sample Queries:</p>", unsafe_allow_html=True)
         col1, col2, col3, col4, col5 = st.columns(5)
-        if col1.button("🇮🇳 निगम क्या है?", key="sample_q1"):
-            st.session_state["user_query_input"] = "निगम क्या है?"
-            st.rerun()
-        if col2.button("🗣️ pani ka boiling point", key="sample_q2"):
-            st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
-            st.rerun()
-        if col3.button("🇧🇩 কর্পোরেশন কি?", key="sample_q3"):
-            st.session_state["user_query_input"] = "কর্পোরেশন কি?"
-            st.rerun()
-        if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?", key="sample_q4"):
-            st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
-            st.rerun()
-        if col5.button("🌐 What is climate change?", key="sample_q5"):
-            st.session_state["user_query_input"] = "What is climate change?"
-            st.rerun()
+        col1.button("🇮🇳 निगम क्या है?", key="sample_q1", on_click=set_sample_query, args=("निगम क्या है?",))
+        col2.button("🗣️ pani ka boiling point", key="sample_q2", on_click=set_sample_query, args=("pani ka boiling point kitna hota h",))
+        col3.button("🇧🇩 কর্পোরেশন কি?", key="sample_q3", on_click=set_sample_query, args=("কর্পোরেশন কি?",))
+        col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?", key="sample_q4", on_click=set_sample_query, args=("கார்பரேஷன் என்றால் என்ன?",))
+        col5.button("🌐 What is climate change?", key="sample_q5", on_click=set_sample_query, args=("What is climate change?",))
 
         st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
         submit_clicked = st.button("Ask Query ➔", type="primary", key="btn_text")
