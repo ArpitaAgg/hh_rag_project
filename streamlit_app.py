@@ -87,29 +87,18 @@ tab_voice, tab_text = st.tabs(["🎙️ Voice Input (Microphone & Audio Upload)"
 # --- TAB 1: VOICE INPUT ---
 with tab_voice:
     st.subheader("🎙️ Voice Query Input")
-    st.caption("Record your query using your microphone or upload an audio recording (.wav, .mp3, .webm, .m4a).")
-    
-    col_rec, col_up = st.columns(2)
+    st.caption("Record your query live using your microphone (Sarvam AI Speech-to-Text).")
     
     audio_bytes = None
-    file_ext = ".webm"
+    file_ext = ".wav"
     
-    with col_rec:
-        st.markdown("**Option A: Live Microphone Recording**")
-        if hasattr(st, "audio_input"):
-            rec_audio = st.audio_input("Click microphone to record voice query:")
-            if rec_audio:
-                audio_bytes = rec_audio.read()
-                file_ext = ".wav"
-        else:
-            st.info("Live microphone widget available in Streamlit 1.38+. Use audio upload on the right.")
-
-    with col_up:
-        st.markdown("**Option B: Upload Audio Recording**")
-        uploaded_file = st.file_uploader("Choose an audio file:", type=["wav", "mp3", "webm", "m4a", "ogg"])
-        if uploaded_file and not audio_bytes:
-            audio_bytes = uploaded_file.read()
-            file_ext = os.path.splitext(uploaded_file.name)[1] or ".webm"
+    if hasattr(st, "audio_input"):
+        rec_audio = st.audio_input("Click microphone button to record voice query:")
+        if rec_audio:
+            audio_bytes = rec_audio.read()
+            file_ext = ".wav"
+    else:
+        st.warning("Live microphone widget requires Streamlit 1.38+.")
 
     if audio_bytes:
         st.audio(audio_bytes, format=f"audio/{file_ext.replace('.', '')}")
