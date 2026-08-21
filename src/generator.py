@@ -287,7 +287,14 @@ def get_generator() -> BaseAnswerGenerator:
     provider = os.getenv("GENERATOR_PROVIDER", "").lower().strip()
     groq_key = os.getenv("GROQ_API_KEY", "").strip()
 
-    if provider == "groq" or (not provider and groq_key):
+    if not groq_key:
+        try:
+            import streamlit as st
+            groq_key = str(st.secrets.get("GROQ_API_KEY", "")).strip()
+        except Exception:
+            pass
+
+    if provider == "groq" or groq_key:
         return GroqAnswerGenerator(api_key=groq_key)
     elif provider in ["api", "cloud"]:
         model_name = os.getenv("GENERATOR_MODEL_NAME", "cloud-api-default")
