@@ -45,10 +45,10 @@ def get_base64_image(file_path):
 bg_base64 = get_base64_image("frontend/bg.jpg")
 logo_base64 = get_base64_image("frontend/logo.png")
 
-bg_style = f"background-image: linear-gradient(180deg, rgba(5,22,13,0.88) 0%, rgba(4,18,10,0.94) 100%), url('data:image/jpeg;base64,{bg_base64}'); background-size: cover; background-attachment: fixed;" if bg_base64 else "background: linear-gradient(135deg, #071510 0%, #0d281e 50%, #040e0b 100%);"
-logo_img_html = f'<div style="text-align: center; margin-bottom: 12px;"><img src="data:image/png;base64,{logo_base64}" style="max-width: 240px; height: auto; border-radius: 8px;"></div>' if logo_base64 else ''
+bg_style = f"background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%), url('data:image/jpeg;base64,{bg_base64}'); background-size: cover; background-position: center; background-attachment: fixed;" if bg_base64 else "background: linear-gradient(135deg, #071510 0%, #0d281e 50%, #040e0b 100%);"
+logo_img_html = f'<div style="text-align: center; padding: 10px 0;"><img src="data:image/png;base64,{logo_base64}" style="max-width: 460px; width: 85%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.6));"></div>' if logo_base64 else ''
 
-# Custom Hacker House Goa Dark Emerald Glassmorphism Theme
+# Custom Hacker House Goa Dark Emerald Theme
 st.markdown(f"""
 <style>
     .stApp {{
@@ -56,13 +56,13 @@ st.markdown(f"""
         color: #e2e8f0;
     }}
     .header-banner {{
-        background: rgba(13, 40, 30, 0.7);
+        background: rgba(13, 40, 30, 0.4);
         border: 1px solid rgba(16, 185, 129, 0.3);
         border-radius: 16px;
-        padding: 24px;
+        padding: 20px;
         text-align: center;
-        backdrop-filter: blur(12px);
         margin-bottom: 24px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }}
     .result-card {{
         background: rgba(15, 23, 42, 0.75);
@@ -84,9 +84,6 @@ st.markdown(f"""
 st.markdown(f"""
 <div class="header-banner">
     {logo_img_html}
-    <h1 style="color: #34d399; margin-bottom: 4px;">⚡ Hacker House Goa 2026</h1>
-    <h3 style="color: #fbbf24; margin-top: 0;">Multilingual Voice RAG Engine (Sarvam STT + FAISS + BM25 + Groq LLM)</h3>
-    <p style="color: #94a3b8;">Grounded Zero-Hallucination Q&A System · Voice & Text Multilingual Pipeline</p>
 </div>
 """, unsafe_allow_html=True)
 
