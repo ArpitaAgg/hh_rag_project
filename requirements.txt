@@ -1,8 +1,10 @@
+fastapi>=0.100.0
+uvicorn>=0.22.0
+python-multipart>=0.0.6
+fastembed>=0.2.0
+faiss-cpu>=1.7.4
+rank_bm25>=0.2.2
+python-dotenv>=1.0.0
+requests>=2.31.0
 datasets>=2.14.0
 streamlit>=1.28.0
-
-fastembed
-faiss-cpu
-rank_bm25
-python-dotenv
-requests
