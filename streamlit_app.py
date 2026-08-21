@@ -12,6 +12,15 @@ import time
 import tempfile
 import streamlit as st
 
+# Sync Streamlit Secrets into os.environ before importing RAG modules
+try:
+    if hasattr(st, "secrets"):
+        for key, val in st.secrets.items():
+            if isinstance(val, str) and val.strip():
+                os.environ[key] = val.strip()
+except Exception:
+    pass
+
 # Ensure sys.path includes src directory
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
@@ -76,7 +85,7 @@ def load_pipelines():
 try:
     with st.spinner("Loading FAISS Vector Index, BM25 Store & Sarvam Voice Engine..."):
         rag_pipeline, voice_pipeline = load_pipelines()
-    st.success("Voice RAG Pipeline & Sarvam STT Engine Ready!")
+    st.success(f"Voice RAG Pipeline & Sarvam STT Engine Ready! Active Generator: {rag_pipeline.generator.provider_name}")
 except Exception as e:
     st.error(f"Failed to load pipeline: {e}")
     st.stop()
