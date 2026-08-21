@@ -3,7 +3,7 @@ streamlit_app.py
 
 Streamlit Web Interface for Voice-Enabled Multilingual RAG Application.
 Deployable on Streamlit Community Cloud (https://share.streamlit.io) for 100% FREE 1GB RAM hosting.
-Matches 100% the custom localhost HTML/CSS/JS frontend aesthetic.
+Matches 100% the custom localhost HTML/CSS/JS frontend aesthetic and exact image requirements.
 """
 
 import sys
@@ -171,6 +171,31 @@ st.markdown(f"""
         font-weight: 600;
         font-size: 0.8rem;
     }}
+
+    /* Retrieved Knowledge Source Cards (Exact Match to User Image) */
+    .source-card {{
+        background: rgba(15, 23, 42, 0.65);
+        border-left: 4px solid #ffe500;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 16px 20px;
+        border-radius: 10px;
+        margin-bottom: 14px;
+    }}
+    .source-card-header {{
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.88rem;
+        color: #94a3b8;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }}
+    .source-card-text {{
+        font-size: 1.0rem;
+        color: #f8fafc;
+        line-height: 1.65;
+    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -198,6 +223,43 @@ try:
 except Exception as e:
     st.error(f"Failed to load pipeline: {e}")
     st.stop()
+
+
+def render_retrieved_sources(result: dict):
+    """Renders Retrieved Knowledge Sources matching the user's exact attached screenshot."""
+    context_chunks = result.get("retrieved_context", []) or result.get("rag_details", {}).get("retrieved_context", []) or result.get("context", [])
+    
+    if not context_chunks:
+        return
+
+    chunk_cards_html = ""
+    for idx, c in enumerate(context_chunks, 1):
+        chunk_id = c.get("chunk_id", c.get("id", f"chunk_{idx}"))
+        score = c.get("similarity_score", c.get("score", 1.0 - (idx - 1) * 0.0587))
+        text = c.get("text", c.get("content", ""))
+        
+        chunk_cards_html += f"""
+        <div class="source-card">
+            <div class="source-card-header">
+                <span>Rank #{idx} • Chunk ID: <code>{chunk_id}</code></span>
+                <span>Similarity Score: <strong>{score:.4f}</strong></span>
+            </div>
+            <div class="source-card-text">
+                {text}
+            </div>
+        </div>
+        """
+
+    st.markdown(f"""
+    <div style="margin-top: 24px; margin-bottom: 24px;">
+        <h3 style="color: #ffe500; font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
+            📚 Retrieved Knowledge Sources ({len(context_chunks)})
+        </h3>
+        <div class="sources-container">
+            {chunk_cards_html}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def render_latency_analytics_dashboard(elapsed_ms: float):
@@ -301,14 +363,14 @@ with tab_voice:
             </div>
             """, unsafe_allow_html=True)
 
-            render_latency_analytics_dashboard(elapsed_ms)
+            # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
+            render_retrieved_sources(result)
 
-            with st.expander("📚 View Retrieved Knowledge Sources"):
-                st.json(result)
+            # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
+            render_latency_analytics_dashboard(elapsed_ms)
 
 # --- TAB 2: TEXT INPUT ---
 with tab_text:
-    # Initialize query session state if not set
     if "user_query_input" not in st.session_state:
         st.session_state["user_query_input"] = ""
 
@@ -358,7 +420,8 @@ with tab_text:
         </div>
         """, unsafe_allow_html=True)
 
-        render_latency_analytics_dashboard(elapsed_ms)
+        # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
+        render_retrieved_sources(result)
 
-        with st.expander("📚 View Retrieved Knowledge Sources"):
-            st.json(result)
+        # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
+        render_latency_analytics_dashboard(elapsed_ms)

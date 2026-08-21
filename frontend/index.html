@@ -113,7 +113,13 @@
                     <div id="answerText" class="answer-content"></div>
                 </div>
 
-                <!-- Latency Evaluation & Analytics Section (Rendered Only After Response Generation) -->
+                <!-- Retrieved Context Chunks Accordion (Rendered Above Latency Analytics) -->
+                <div class="result-box sources-box" style="margin-top: 20px;">
+                    <h3 style="color: #ffe500;">📚 Retrieved Knowledge Sources (<span id="sourceCount">0</span>)</h3>
+                    <div id="sourcesContainer" class="sources-list"></div>
+                </div>
+
+                <!-- Latency Evaluation & Analytics Section (Rendered Below Knowledge Sources) -->
                 <div class="analytics-panel card glass-card" style="margin-top: 20px;">
                     <div class="analytics-header">
                         <h2>📊 Latency Evaluation & Percentile Analytics</h2>
@@ -178,12 +184,6 @@
                             <div class="progress-bar"><div class="progress-fill" style="width: 1%;"></div></div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Retrieved Context Chunks Accordion -->
-                <div class="result-box sources-box">
-                    <h3>📚 Retrieved Knowledge Sources (<span id="sourceCount">0</span>)</h3>
-                    <div id="sourcesContainer" class="sources-list"></div>
                 </div>
             </section>
         </main>
