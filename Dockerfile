@@ -1,24 +1,23 @@
 FROM python:3.11-slim
 
+# Install ffmpeg for Sarvam voice STT audio processing and git
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    git \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-ENV PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY requirements.txt requirements-web.txt ./
-RUN pip install --no-cache-dir -r requirements.txt -r requirements-web.txt
-
+# Copy application codebase
 COPY . .
 
-# Seed the demo sample data and pre-build the FAISS index + embedding model
-# cache at image build time, so the first live request doesn't pay for it.
-RUN python extract_samples_and_analysis.py && \
-    python src/build_faiss_index.py
+# Expose port (default 7860 for HF Spaces, $PORT for Render)
+EXPOSE 7860 10000
 
-# Hugging Face Spaces (Docker SDK) requires a world-writable app directory
-# since the container runs as a non-root user.
-RUN mkdir -p data/indexes data/temp_uploads && chmod -R 777 /app
-
-EXPOSE 7860
-
-CMD ["python", "-m", "uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "7860"]
+# Start Uvicorn on $PORT (or 7860 fallback)
+CMD ["sh", "-c", "uvicorn src.api:app --host 0.0.0.0 --port ${PORT:-7860}"]
