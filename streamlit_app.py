@@ -45,10 +45,10 @@ def get_base64_image(file_path):
 bg_base64 = get_base64_image("frontend/bg.jpg")
 logo_base64 = get_base64_image("frontend/logo.png")
 
-bg_style = f"background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%), url('data:image/jpeg;base64,{bg_base64}'); background-size: cover; background-position: center; background-attachment: fixed;" if bg_base64 else "background: linear-gradient(135deg, #071510 0%, #0d281e 50%, #040e0b 100%);"
+bg_style = f"background-image: linear-gradient(180deg, rgba(5,22,13,0.88) 0%, rgba(4,18,10,0.94) 100%), url('data:image/jpeg;base64,{bg_base64}'); background-size: cover; background-attachment: fixed;" if bg_base64 else "background: linear-gradient(135deg, #071510 0%, #0d281e 50%, #040e0b 100%);"
 logo_img_html = f'<div style="text-align: center; padding: 10px 0;"><img src="data:image/png;base64,{logo_base64}" style="max-width: 460px; width: 85%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.6));"></div>' if logo_base64 else ''
 
-# Custom Hacker House Goa Dark Emerald Theme
+# Custom Hacker House Goa Dark Emerald Glassmorphism Theme
 st.markdown(f"""
 <style>
     .stApp {{
@@ -56,11 +56,12 @@ st.markdown(f"""
         color: #e2e8f0;
     }}
     .header-banner {{
-        background: rgba(13, 40, 30, 0.4);
+        background: rgba(13, 40, 30, 0.7);
         border: 1px solid rgba(16, 185, 129, 0.3);
         border-radius: 16px;
         padding: 20px;
         text-align: center;
+        backdrop-filter: blur(12px);
         margin-bottom: 24px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }}
