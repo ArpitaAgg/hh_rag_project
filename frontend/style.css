@@ -549,3 +549,121 @@ body {
     font-family: var(--font-heading);
     letter-spacing: 0.5px;
 }
+
+/* --- LATENCY ANALYTICS DASHBOARD --- */
+.analytics-panel {
+    margin-bottom: 24px;
+    padding: 24px;
+}
+
+.analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.analytics-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: #34d399;
+}
+
+.target-badge {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.metric-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    border-radius: 12px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(52, 211, 153, 0.4);
+}
+
+.metric-icon {
+    font-size: 2rem;
+}
+
+.metric-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-label {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 2px 0;
+}
+
+.metric-delta {
+    font-size: 0.75rem;
+    color: #34d399;
+    font-weight: 600;
+}
+
+.breakdown-box {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.breakdown-box h4 {
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    color: #fbbf24;
+}
+
+.progress-item {
+    margin-bottom: 10px;
+}
+
+.progress-label {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    border-radius: 4px;
+}
