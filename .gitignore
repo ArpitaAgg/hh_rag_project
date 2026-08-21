@@ -25,7 +25,6 @@ Thumbs.db
 data/temp_uploads/
 data/*.json
 data/*.parquet
-data/indexes/
 *.parquet
 *.wav
 *.mp3
