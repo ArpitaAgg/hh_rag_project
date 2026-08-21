@@ -55,7 +55,28 @@ st.markdown(f"""
     .stApp {{
         {bg_style}
         color: #ffffff;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', sans-serif !important;
+    }}
+
+    /* Enforce Theme Fonts across Streamlit Components */
+    h1, h2, h3, h4, h5, h6, .badge-tag, button, .stButton button {{
+        font-family: 'Outfit', 'Space Grotesk', sans-serif !important;
+    }}
+
+    .stTextInput input {{
+        font-family: 'Inter', sans-serif !important;
+        font-size: 1.05rem !important;
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid rgba(255, 229, 0, 0.3) !important;
+        color: #ffffff !important;
+        border-radius: 10px !important;
+        padding: 10px 14px !important;
+    }}
+
+    .stButton button {{
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.5px !important;
     }}
 
     .glass-card, .glass-header {{
@@ -361,31 +382,37 @@ with tab_text:
     if "user_query_input" not in st.session_state:
         st.session_state["user_query_input"] = ""
 
-    user_query = st.text_input(
-        "Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English...",
-        value=st.session_state["user_query_input"],
-        key="input_text_query_field"
-    )
+    with st.container(border=True):
+        st.markdown("<h3 style='color: #ffe500; font-family: \"Outfit\", sans-serif; font-size: 1.2rem; margin-bottom: 8px;'>💬 Text Query Input</h3>", unsafe_allow_html=True)
+        
+        user_query = st.text_input(
+            "Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English...",
+            value=st.session_state["user_query_input"],
+            key="input_text_query_field"
+        )
 
-    st.markdown("**Sample Queries:**")
-    col1, col2, col3, col4, col5 = st.columns(5)
-    if col1.button("🇮🇳 निगम क्या है?"):
-        st.session_state["user_query_input"] = "निगम क्या है?"
-        st.rerun()
-    if col2.button("🗣️ pani ka boiling point"):
-        st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
-        st.rerun()
-    if col3.button("🇧🇩 কর্পোরেশন কি?"):
-        st.session_state["user_query_input"] = "কর্পোরেশন কি?"
-        st.rerun()
-    if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?"):
-        st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
-        st.rerun()
-    if col5.button("🌐 What is climate change?"):
-        st.session_state["user_query_input"] = "What is climate change?"
-        st.rerun()
+        st.markdown("<p style='color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-top: 12px; margin-bottom: 6px;'>Sample Queries:</p>", unsafe_allow_html=True)
+        col1, col2, col3, col4, col5 = st.columns(5)
+        if col1.button("🇮🇳 निगम क्या है?"):
+            st.session_state["user_query_input"] = "निगम क्या है?"
+            st.rerun()
+        if col2.button("🗣️ pani ka boiling point"):
+            st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
+            st.rerun()
+        if col3.button("🇧🇩 কর্পোরেশন কি?"):
+            st.session_state["user_query_input"] = "কর্পোরেশন কি?"
+            st.rerun()
+        if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?"):
+            st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
+            st.rerun()
+        if col5.button("🌐 What is climate change?"):
+            st.session_state["user_query_input"] = "What is climate change?"
+            st.rerun()
 
-    if st.button("Ask Query ➔", type="primary", key="btn_text") and user_query.strip():
+        st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
+        submit_clicked = st.button("Ask Query ➔", type="primary", key="btn_text")
+
+    if submit_clicked and user_query.strip():
         t0 = time.time()
         with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
             result = rag_pipeline.answer(user_query.strip())
