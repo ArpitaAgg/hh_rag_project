@@ -6,10 +6,6 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
 COPY requirements.txt requirements-web.txt ./
-
-# Install the CPU-only PyTorch build first so sentence-transformers' resolver
-# doesn't pull the multi-GB CUDA wheel (unneeded on Spaces' free CPU tier).
-RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt -r requirements-web.txt
 
 COPY . .
