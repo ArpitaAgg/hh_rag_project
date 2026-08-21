@@ -217,93 +217,6 @@ st.markdown(f"""
         color: #f8fafc;
         line-height: 1.65;
     }}
-
-    /* Divider matching frontend screenshot */
-    .divider {{
-        text-align: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        line-height: 0.1em;
-        margin: 28px 0 24px 0;
-    }}
-    .divider span {{
-        background: #092e1a;
-        padding: 4px 16px;
-        color: #a3c9b4;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        border-radius: 4px;
-    }}
-
-    /* Custom Button Aesthetics matching User Screenshot */
-    /* Yellow Gold Voice Recording Button */
-    button[aria-label*="START VOICE RECORDING"],
-    div[data-element-id="btn_start_voice"] button,
-    .btn-gold {{
-        background: linear-gradient(135deg, #ffe500, #f5c518) !important;
-        color: #072214 !important;
-        border: none !important;
-        border-radius: 14px !important;
-        font-weight: 800 !important;
-        font-size: 0.95rem !important;
-        letter-spacing: 0.5px !important;
-        text-transform: uppercase !important;
-        box-shadow: 0 4px 20px rgba(255, 229, 0, 0.45) !important;
-        height: 52px !important;
-        transition: all 0.25s ease !important;
-    }}
-
-    button[aria-label*="START VOICE RECORDING"]:hover,
-    div[data-element-id="btn_start_voice"] button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 30px rgba(255, 229, 0, 0.7) !important;
-    }}
-
-    /* Red/Maroon Stop Voice Button */
-    button[aria-label*="STOP & SUBMIT VOICE"],
-    div[data-element-id="btn_stop_voice"] button,
-    .btn-pink {{
-        background: linear-gradient(135deg, #800020, #991b1b) !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 14px !important;
-        font-weight: 800 !important;
-        font-size: 0.95rem !important;
-        letter-spacing: 0.5px !important;
-        text-transform: uppercase !important;
-        box-shadow: 0 4px 20px rgba(128, 0, 32, 0.45) !important;
-        height: 52px !important;
-        transition: all 0.25s ease !important;
-    }}
-
-    button[aria-label*="STOP & SUBMIT VOICE"]:hover,
-    div[data-element-id="btn_stop_voice"] button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 30px rgba(153, 27, 27, 0.7) !important;
-    }}
-
-    /* Emerald Green Ask Query Submit Button */
-    button[aria-label*="ASK QUERY"],
-    div[data-element-id="btn_text"] button,
-    .btn-submit {{
-        background: linear-gradient(135deg, #10b981, #059669) !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 14px !important;
-        font-weight: 800 !important;
-        font-size: 1rem !important;
-        letter-spacing: 0.5px !important;
-        text-transform: uppercase !important;
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.45) !important;
-        height: 52px !important;
-        transition: all 0.25s ease !important;
-    }}
-
-    button[aria-label*="ASK QUERY"]:hover,
-    div[data-element-id="btn_text"] button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 30px rgba(16, 185, 129, 0.7) !important;
-    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -394,7 +307,7 @@ def render_latency_analytics_dashboard(elapsed_ms: float):
             """, unsafe_allow_html=True)
 
 
-# Main Content Panel (100% match to frontend/index.html & user screenshot)
+# Main Content Panel (100% match to frontend/index.html)
 st.markdown("""
 <div class="panel-header">
     <h2 style="color: #ffe500;">🎙️ Speak or Type Your Question</h2>
@@ -402,134 +315,133 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-if "user_query_input" not in st.session_state:
-    st.session_state["user_query_input"] = ""
+# Tabs for Voice & Text Query
+tab_voice, tab_text = st.tabs(["🎙️ Voice Input (Microphone)", "💬 Text Input Mode"])
 
-with st.container(border=True):
-    # 1. VOICE INPUT BUTTONS (Matching User Screenshot 100%)
-    vcol1, vcol2 = st.columns(2)
-    with vcol1:
-        start_voice_clicked = st.button("🎙️ START VOICE RECORDING", key="btn_start_voice", use_container_width=True)
-    with vcol2:
-        stop_voice_clicked = st.button("⏹️ STOP & SUBMIT VOICE", key="btn_stop_voice", use_container_width=True)
+# --- TAB 1: VOICE INPUT ---
+with tab_voice:
+    with st.container(border=True):
+        st.markdown("<h3 style='color: #ffe500; font-family: \"Outfit\", sans-serif; font-size: 1.2rem; margin-bottom: 4px;'>🎙️ Voice Query Input</h3>", unsafe_allow_html=True)
+        st.caption("Record your query live using your microphone (Sarvam AI Speech-to-Text).")
+        
+        audio_bytes = None
+        file_ext = ".wav"
+        
+        if hasattr(st, "audio_input"):
+            rec_audio = st.audio_input("Click microphone button to record voice query:")
+            if rec_audio:
+                audio_bytes = rec_audio.read()
+                file_ext = ".wav"
+        else:
+            st.warning("Live microphone widget requires Streamlit 1.38+.")
 
-    audio_bytes = None
-    file_ext = ".wav"
-    
-    if hasattr(st, "audio_input"):
-        rec_audio = st.audio_input("Record live voice audio:", label_visibility="collapsed")
-        if rec_audio:
-            audio_bytes = rec_audio.read()
-            file_ext = ".wav"
-    else:
-        st.warning("Live microphone widget requires Streamlit 1.38+.")
+        process_voice_clicked = False
+        if audio_bytes:
+            st.audio(audio_bytes, format=f"audio/{file_ext.replace('.', '')}")
+            st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
+            process_voice_clicked = st.button("🚀 Process Voice Query", type="primary", key="btn_voice")
 
-    if audio_bytes:
-        st.audio(audio_bytes, format=f"audio/{file_ext.replace('.', '')}")
+    if audio_bytes and process_voice_clicked:
+        t0 = time.time()
+        with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
+            with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
+                tmp.write(audio_bytes)
+                tmp_path = tmp.name
 
-    # 2. CENTER DIVIDER (Matching User Screenshot 100%)
-    st.markdown('<div class="divider"><span>OR TYPE IN ANY SCRIPT / LANGUAGE</span></div>', unsafe_allow_html=True)
+            try:
+                result = voice_pipeline.answer_audio(tmp_path)
+            finally:
+                if os.path.exists(tmp_path):
+                    os.remove(tmp_path)
 
-    # 3. TEXT INPUT FIELD & ASK QUERY BUTTON (Matching User Screenshot 100%)
-    tcol1, tcol2 = st.columns([3.5, 1.2])
-    with tcol1:
+        elapsed_ms = round((time.time() - t0) * 1000, 2)
+        
+        st.markdown("---")
+        st.markdown(f"""
+        <div class="status-badges">
+            <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
+            <span class="badge-grounded">GROUNDED</span>
+            <span class="badge-info">Groq ({rag_pipeline.generator.provider_name})</span>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="transcript-box">
+            <strong style="color: #fbbf24;">🗣️ Spoken Transcript / Question:</strong>
+            <p style="font-size: 1.1rem; color: #f8fafc; margin: 4px 0 0 0;">"{result.get('transcript', '')}"</p>
+            <small style="color: #94a3b8;">Detected Language: <code>{result.get('language', 'unknown')}</code> | STT Latency: <code>{result.get('latency', {}).get('stt_ms', 0)} ms</code> | Total: <code>{elapsed_ms} ms</code></small>
+        </div>
+        <div class="result-card">
+            <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
+            <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
+        render_retrieved_sources(result)
+
+        # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
+        render_latency_analytics_dashboard(elapsed_ms)
+
+# --- TAB 2: TEXT INPUT ---
+with tab_text:
+    if "user_query_input" not in st.session_state:
+        st.session_state["user_query_input"] = ""
+
+    with st.container(border=True):
+        st.markdown("<h3 style='color: #ffe500; font-family: \"Outfit\", sans-serif; font-size: 1.2rem; margin-bottom: 8px;'>💬 Text Query Input</h3>", unsafe_allow_html=True)
+        
         user_query = st.text_input(
-            "Query Input",
-            placeholder="Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English...",
+            "Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English...",
             value=st.session_state["user_query_input"],
-            key="input_text_query_field",
-            label_visibility="collapsed"
+            key="input_text_query_field"
         )
-    with tcol2:
-        submit_text_clicked = st.button("ASK QUERY ➔", key="btn_text", use_container_width=True)
 
-    # 4. SAMPLE QUERY PILLS
-    st.markdown("<p style='color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-top: 14px; margin-bottom: 8px;'>Sample Queries:</p>", unsafe_allow_html=True)
-    scol1, scol2, scol3, scol4, scol5 = st.columns(5)
-    if scol1.button("🇮🇳 निगम क्या है?", key="s1"):
-        st.session_state["user_query_input"] = "निगम क्या है?"
-        st.rerun()
-    if scol2.button("🗣️ pani ka boiling point", key="s2"):
-        st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
-        st.rerun()
-    if scol3.button("🇧🇩 কর্পোরেশন কি?", key="s3"):
-        st.session_state["user_query_input"] = "কর্পোরেশন কি?"
-        st.rerun()
-    if scol4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?", key="s4"):
-        st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
-        st.rerun()
-    if scol5.button("🌐 What is climate change?", key="s5"):
-        st.session_state["user_query_input"] = "What is climate change?"
-        st.rerun()
+        st.markdown("<p style='color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-top: 12px; margin-bottom: 6px;'>Sample Queries:</p>", unsafe_allow_html=True)
+        col1, col2, col3, col4, col5 = st.columns(5)
+        if col1.button("🇮🇳 निगम क्या है?"):
+            st.session_state["user_query_input"] = "निगम क्या है?"
+            st.rerun()
+        if col2.button("🗣️ pani ka boiling point"):
+            st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
+            st.rerun()
+        if col3.button("🇧🇩 কর্পোরেশন কি?"):
+            st.session_state["user_query_input"] = "কর্পোরেশন কি?"
+            st.rerun()
+        if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?"):
+            st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
+            st.rerun()
+        if col5.button("🌐 What is climate change?"):
+            st.session_state["user_query_input"] = "What is climate change?"
+            st.rerun()
 
-# --- VOICE PIPELINE EXECUTION ---
-if audio_bytes and (stop_voice_clicked or start_voice_clicked):
-    t0 = time.time()
-    with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
-        with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
-            tmp.write(audio_bytes)
-            tmp_path = tmp.name
+        st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
+        submit_clicked = st.button("Ask Query ➔", type="primary", key="btn_text")
 
-        try:
-            result = voice_pipeline.answer_audio(tmp_path)
-        finally:
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
+    if submit_clicked and user_query.strip():
+        t0 = time.time()
+        with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
+            result = rag_pipeline.answer(user_query.strip())
+        elapsed_ms = round((time.time() - t0) * 1000, 2)
 
-    elapsed_ms = round((time.time() - t0) * 1000, 2)
-    
-    st.markdown("---")
-    st.markdown(f"""
-    <div class="status-badges">
-        <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
-        <span class="badge-grounded">GROUNDED</span>
-        <span class="badge-info">Groq ({rag_pipeline.generator.provider_name})</span>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown(f"""
-    <div class="transcript-box">
-        <strong style="color: #fbbf24;">🗣️ Spoken Transcript / Question:</strong>
-        <p style="font-size: 1.1rem; color: #f8fafc; margin: 4px 0 0 0;">"{result.get('transcript', '')}"</p>
-        <small style="color: #94a3b8;">Detected Language: <code>{result.get('language', 'unknown')}</code> | STT Latency: <code>{result.get('latency', {}).get('stt_ms', 0)} ms</code> | Total: <code>{elapsed_ms} ms</code></small>
-    </div>
-    <div class="result-card">
-        <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
-        <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("---")
+        st.markdown(f"""
+        <div class="status-badges">
+            <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
+            <span class="badge-grounded">GROUNDED</span>
+            <span class="badge-info">{rag_pipeline.generator.provider_name}</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST
-    render_retrieved_sources(result)
+        st.markdown(f"""
+        <div class="result-card">
+            <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
+            <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
-    render_latency_analytics_dashboard(elapsed_ms)
+        # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
+        render_retrieved_sources(result)
 
-# --- TEXT PIPELINE EXECUTION ---
-elif submit_text_clicked and user_query.strip():
-    t0 = time.time()
-    with st.spinner("Processing query through Sarvam STT & Vector RAG Pipeline..."):
-        result = rag_pipeline.answer(user_query.strip())
-    elapsed_ms = round((time.time() - t0) * 1000, 2)
-
-    st.markdown("---")
-    st.markdown(f"""
-    <div class="status-badges">
-        <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
-        <span class="badge-grounded">GROUNDED</span>
-        <span class="badge-info">{rag_pipeline.generator.provider_name}</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown(f"""
-    <div class="result-card">
-        <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
-        <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST
-    render_retrieved_sources(result)
-
-    # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
-    render_latency_analytics_dashboard(elapsed_ms)
+        # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
+        render_latency_analytics_dashboard(elapsed_ms)
