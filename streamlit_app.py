@@ -357,31 +357,31 @@ with tab_voice:
         elapsed_ms = round((time.time() - t0) * 1000, 2)
         
         st.markdown("---")
-            st.markdown(f"""
-            <div class="status-badges">
-                <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
-                <span class="badge-grounded">GROUNDED</span>
-                <span class="badge-info">Groq ({rag_pipeline.generator.provider_name})</span>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown(f"""
-            <div class="transcript-box">
-                <strong style="color: #fbbf24;">🗣️ Spoken Transcript / Question:</strong>
-                <p style="font-size: 1.1rem; color: #f8fafc; margin: 4px 0 0 0;">"{result.get('transcript', '')}"</p>
-                <small style="color: #94a3b8;">Detected Language: <code>{result.get('language', 'unknown')}</code> | STT Latency: <code>{result.get('latency', {}).get('stt_ms', 0)} ms</code> | Total: <code>{elapsed_ms} ms</code></small>
-            </div>
-            <div class="result-card">
-                <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
-                <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="status-badges">
+            <span class="badge-status">{result.get('status', 'ANSWERED').upper()}</span>
+            <span class="badge-grounded">GROUNDED</span>
+            <span class="badge-info">Groq ({rag_pipeline.generator.provider_name})</span>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="transcript-box">
+            <strong style="color: #fbbf24;">🗣️ Spoken Transcript / Question:</strong>
+            <p style="font-size: 1.1rem; color: #f8fafc; margin: 4px 0 0 0;">"{result.get('transcript', '')}"</p>
+            <small style="color: #94a3b8;">Detected Language: <code>{result.get('language', 'unknown')}</code> | STT Latency: <code>{result.get('latency', {}).get('stt_ms', 0)} ms</code> | Total: <code>{elapsed_ms} ms</code></small>
+        </div>
+        <div class="result-card">
+            <h4 style="color: #34d399; margin-top: 0;">💡 Grounded Answer:</h4>
+            <p style="font-size: 1.15rem; color: #ffffff; line-height: 1.6;">{result.get('answer', '')}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-            # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
-            render_retrieved_sources(result)
+        # 1. RENDER RETRIEVED KNOWLEDGE SOURCES FIRST (MATCHING USER SCREENSHOT)
+        render_retrieved_sources(result)
 
-            # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
-            render_latency_analytics_dashboard(elapsed_ms)
+        # 2. RENDER LATENCY EVALUATION DASHBOARD BELOW KNOWLEDGE SOURCES
+        render_latency_analytics_dashboard(elapsed_ms)
 
 # --- TAB 2: TEXT INPUT ---
 with tab_text:
