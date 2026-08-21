@@ -393,25 +393,24 @@ with tab_text:
         
         user_query = st.text_input(
             "Type in Hindi, Hinglish, Bengali, Tamil, Gujarati, English...",
-            value=st.session_state["user_query_input"],
-            key="input_text_query_field"
+            key="user_query_input"
         )
 
         st.markdown("<p style='color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-top: 12px; margin-bottom: 6px;'>Sample Queries:</p>", unsafe_allow_html=True)
         col1, col2, col3, col4, col5 = st.columns(5)
-        if col1.button("🇮🇳 निगम क्या है?"):
+        if col1.button("🇮🇳 निगम क्या है?", key="sample_q1"):
             st.session_state["user_query_input"] = "निगम क्या है?"
             st.rerun()
-        if col2.button("🗣️ pani ka boiling point"):
+        if col2.button("🗣️ pani ka boiling point", key="sample_q2"):
             st.session_state["user_query_input"] = "pani ka boiling point kitna hota h"
             st.rerun()
-        if col3.button("🇧🇩 কর্পোরেশন কি?"):
+        if col3.button("🇧🇩 কর্পোরেশন কি?", key="sample_q3"):
             st.session_state["user_query_input"] = "কর্পোরেশন কি?"
             st.rerun()
-        if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?"):
+        if col4.button("🇮🇳 கார்பரேஷன் என்றால் என்ன?", key="sample_q4"):
             st.session_state["user_query_input"] = "கார்பரேஷன் என்றால் என்ன?"
             st.rerun()
-        if col5.button("🌐 What is climate change?"):
+        if col5.button("🌐 What is climate change?", key="sample_q5"):
             st.session_state["user_query_input"] = "What is climate change?"
             st.rerun()
 
